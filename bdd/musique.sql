@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  MySQL 5.0                                     */
-/* Date de création :  10/08/2017 20:23:14                      */
+/* Date de création :  13/08/2017 12:27:46                      */
 /*==============================================================*/
 
 
@@ -19,6 +19,8 @@ drop table if exists LOGIN;
 drop table if exists LOGINADMIN;
 
 drop table if exists MUSIQUE;
+
+drop table if exists TYPEMUSIQUE;
 
 /*==============================================================*/
 /* Table : ADMIN                                                */
@@ -116,11 +118,22 @@ create table LOGINADMIN
 create table MUSIQUE
 (
    IDMUSIQUE            int not null,
+   IDTYPEMUSIQUE        int not null,
    IDARTISTE            int not null,
    TITRE                varchar(100) not null,
    DESCRIPTION          varchar(1000) not null,
    LIENYOUTUBE          varchar(400) not null,
    primary key (IDMUSIQUE)
+);
+
+/*==============================================================*/
+/* Table : TYPEMUSIQUE                                          */
+/*==============================================================*/
+create table TYPEMUSIQUE
+(
+   IDTYPEMUSIQUE        int not null,
+   LIBELLE              varchar(90) not null,
+   primary key (IDTYPEMUSIQUE)
 );
 
 alter table COMMENTAIRE add constraint FK_ASSOCIATION_4 foreign key (IDCLIENT)
@@ -140,4 +153,7 @@ alter table LOGIN add constraint FK_LOGIN foreign key (IDCLIENT)
 
 alter table MUSIQUE add constraint FK_ARTISTE_MUSIQUE foreign key (IDARTISTE)
       references ARTISTE (IDARTISTE) on delete restrict on update restrict;
+
+alter table MUSIQUE add constraint FK_MUSIQUE_TYPE foreign key (IDTYPEMUSIQUE)
+      references TYPEMUSIQUE (IDTYPEMUSIQUE) on delete restrict on update restrict;
 
